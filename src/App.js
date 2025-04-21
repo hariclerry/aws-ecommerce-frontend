@@ -4,9 +4,13 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import { useAuth } from 'react-oidc-context';
 // import Login from './pages/Login';
 
 function App() {
+  const auth = useAuth();
+console.log('Auth state:', auth.isAuthenticated, auth.isLoading);
+  if (auth.isLoading) return <p>Loading auth session...</p>;
   return (
     <Router>
       <Navbar />

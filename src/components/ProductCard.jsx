@@ -11,8 +11,8 @@ export default function ProductCard({ product }) {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow hover:shadow-md transition-shadow duration-200 p-4 flex flex-col h-full">
       <img
-        src={product.image || 'https://placehold.co/300x200?text=No+Image'}
-        alt={product.name}
+        src={product.image_url || 'https://placehold.co/300x200?text=No+Image'}
+        alt={product.product_name}
         className="w-full h-48 object-cover rounded mb-4"
         onError={(e) => {
           e.target.onerror = null;
@@ -21,12 +21,14 @@ export default function ProductCard({ product }) {
       />
       <div className="flex-1">
         <h2 className="text-lg font-semibold text-gray-800 mb-2">
-          {product.name}
+          {product.product_name}
         </h2>
         <p className="text-sm text-gray-600 line-clamp-2">
-          {product.description}
+          {product.product_desc}
         </p>
-        <p className="text-gray-800 font-semibold mt-2">${product.price}</p>
+        <p className="text-gray-800 font-semibold mt-2">
+          ${product.product_price}
+        </p>
       </div>
       <div className="mt-4 flex justify-between items-center">
         <button
@@ -66,17 +68,18 @@ export default function ProductCard({ product }) {
               </button>
               <img
                 src={
-                  product.image || 'https://placehold.co/300x200?text=No+Image'
+                  product.image_url ||
+                  'https://placehold.co/300x200?text=No+Image'
                 }
-                alt={product.name}
+                alt={product.product_name}
                 className="w-full h-48 object-cover rounded mb-4"
               />
               <h3 className="text-xl font-bold text-gray-800 mb-2">
-                {product.name}
+                {product.product_name}
               </h3>
-              <p className="text-gray-700 mb-4">{product.description}</p>
+              <p className="text-gray-700 mb-4">{product.product_desc}</p>
               <p className="text-lg font-semibold text-green-700">
-                ${product.price}
+                ${product.product_price}
               </p>
               <button
                 onClick={() => {

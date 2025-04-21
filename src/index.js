@@ -8,10 +8,20 @@ import { Provider } from 'react-redux';
 import { AuthProvider } from 'react-oidc-context';
 import authConfig from './lib/authConfig';
 
+const customAuthConfig = {
+  ...authConfig,
+  onSigninCallback: (user) => {
+    console.log('User signed in:', user?.state);
+    const returnTo = user?.state?.returnTo || '/';
+    window.history.replaceState({}, document.title, returnTo);
+  },
+};
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <AuthProvider {...authConfig}>
+    <AuthProvider {...customAuthConfig}>
       <App />
     </AuthProvider>
   </Provider>
