@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'react-oidc-context';
+import { toast } from 'react-toastify';
 import { placeOrder } from '../redux/orders/orderSlice';
 import { clearCart } from '../redux/cart/cartSlice';
 import PaymentModal from '../components/PaymentModal';
@@ -23,6 +24,7 @@ export default function Checkout() {
 
   useEffect(() => {
     if (order?.status === 'succeeded') {
+      toast.success('Order placed successfully!');
       setShowPayment(true);
     }
   }, [order?.status]);
@@ -38,7 +40,6 @@ export default function Checkout() {
     setShowPayment(false);
     navigate('/');
   };
-  console.log('Payment order:', cartItems);
   const totalAmount = cartItems
     .reduce((sum, item) => {
       const price = Number(item.product_price) || 0;
@@ -48,6 +49,12 @@ export default function Checkout() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
+      <button
+        onClick={() => navigate('/cart')}
+        className="text-sm text-blue-600 hover:underline"
+      >
+        ← Back To Cart
+      </button>
       <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Checkout</h1>
         <p className="text-gray-700 mb-6">

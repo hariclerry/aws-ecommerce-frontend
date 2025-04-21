@@ -6,7 +6,6 @@ const BASE_URL = process.env.REACT_APP_API_URL; // Replace with your actual API 
 export const placeOrder = createAsyncThunk(
   'orders/placeOrder',
   async ({ cartItems }, thunkAPI) => {
-    console.log('Placing order with items:', cartItems);
     const payload = {
       cart_number: Math.floor(Math.random() * 1000000),
       // total_amount: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2),

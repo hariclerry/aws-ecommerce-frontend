@@ -15,11 +15,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-  console.log('items:----', searchQuery);
-  // Search filter
-  // const filtered = items.filter((p) =>
-  //   p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+
   const filtered = (items || []).filter((p) =>
     p.product_name?.toLowerCase().includes(searchQuery.toLowerCase())
   );

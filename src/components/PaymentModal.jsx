@@ -1,7 +1,9 @@
 // src/components/PaymentModal.js
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { makePayment } from '../redux/payments/paymentSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function PaymentModal({
   order,
@@ -16,6 +18,7 @@ export default function PaymentModal({
   const [expiry, setExpiry] = useState('');
   const [cvc, setCvc] = useState('');
   const [name, setName] = useState('');
+  const navigate = useNavigate();
   const handleFinish = () => {
     if (!order?.order_id) return;
 
@@ -31,7 +34,11 @@ export default function PaymentModal({
 
     dispatch(makePayment(paymentPayload)).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        onSuccess();
+        const { order_id, payment_id, message } = res.payload;
+        toast.success('Payment successful!');
+        navigate('/');
+      } else {
+        toast.error('Payment failed! Please try again.');
       }
     });
   };
@@ -55,6 +62,7 @@ export default function PaymentModal({
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full border p-2 rounded"
+            required
           />
           <input
             type="text"
@@ -62,6 +70,8 @@ export default function PaymentModal({
             value={cardNumber}
             onChange={(e) => setCardNumber(e.target.value)}
             className="w-full border p-2 rounded"
+            maxLength={6}
+            required
           />
           <div className="flex gap-2">
             <input
@@ -70,6 +80,8 @@ export default function PaymentModal({
               value={expiry}
               onChange={(e) => setExpiry(e.target.value)}
               className="w-1/2 border p-2 rounded"
+              maxLength={5}
+              required
             />
             <input
               type="text"
@@ -77,6 +89,8 @@ export default function PaymentModal({
               value={cvc}
               onChange={(e) => setCvc(e.target.value)}
               className="w-1/2 border p-2 rounded"
+              maxLength={3}
+              required
             />
           </div>
           <button
