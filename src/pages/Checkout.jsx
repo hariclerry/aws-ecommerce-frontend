@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearCart } from '../redux/cart/cartSlice';
+import { useAuth } from 'react-oidc-context';
 import { useNavigate } from 'react-router-dom';
 
 export default function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) auth.signinRedirect();
+  }, [auth]);
 
   const handleFinish = () => {
     dispatch(clearCart());
