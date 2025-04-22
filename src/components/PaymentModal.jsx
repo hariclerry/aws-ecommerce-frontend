@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { makePayment } from '../redux/payments/paymentSlice';
 import { useNavigate } from 'react-router-dom';
+import { clearCart } from '../redux/cart/cartSlice';
 
 export default function PaymentModal({
   order,
@@ -19,6 +20,7 @@ export default function PaymentModal({
   const [cvc, setCvc] = useState('');
   const [name, setName] = useState('');
   const navigate = useNavigate();
+
   const handleFinish = () => {
     if (!order?.order_id) return;
 
@@ -34,7 +36,7 @@ export default function PaymentModal({
 
     dispatch(makePayment(paymentPayload)).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        const { order_id, payment_id, message } = res.payload;
+        dispatch(clearCart());
         toast.success('Payment successful!');
         navigate('/');
       } else {
