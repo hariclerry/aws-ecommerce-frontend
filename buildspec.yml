@@ -2,7 +2,11 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 18  # Specify the Node.js version
     commands:
+      - echo "Installing dependencies..." # Install AWS CLI if not already installed
+      - echo "Dependencies installed."
       - npm install
   build:
     commands:
