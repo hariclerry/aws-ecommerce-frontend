@@ -27,29 +27,25 @@ export default function Home() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* Search Bar */}
       <input
         type="text"
-        placeholder="Search products..."
+        placeholder="Search products by name..."
         value={searchQuery}
         onChange={(e) => dispatch(setSearchQuery(e.target.value))}
         className="mb-6 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200"
       />
 
-      {/* Loading / Error states */}
       {loading && (
         <p className="text-center text-blue-500">Loading products...</p>
       )}
       {error && <p className="text-center text-red-500">{error}</p>}
 
-      {/* Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {currentItems.map((product) => (
           <ProductCard key={product.product_id} product={product} />
         ))}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-8 space-x-2">
           {[...Array(totalPages)].map((_, i) => (
